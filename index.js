@@ -3,8 +3,8 @@ const neo4j = require("neo4j-driver");
 const { makeAugmentedSchema } = require("neo4j-graphql-js");
 
 const AURA_ENDPOINT = 'neo4j+s://3710420b.databases.neo4j.io'
-const USERNAME = 'neo4j';
-const PASSWORD = 'NjV8ok33nIv6lk06D1ToFnZBexF3YnbUBgGoW5k2uO8';
+const USERNAME = '<<Username>>';
+const PASSWORD = '<<Password>>';
 
 const typeDefs = /* GraphQL */ `
    type Industry {
