@@ -20,14 +20,14 @@ CREATE (Python390:MSChassis{title:'Python',description:'Python',ver:'3.9.0'})
 CREATE (Python395:MSChassis{title:'Python',description:'Python',ver:'3.9.5'})
 CREATE (Go1164:MSChassis{title:'Go',description:'Go',ver:'1.16.4'})
 CREATE (NodeJS1620:MSChassis{title:'NodeJS',description:'NodeJS', ver:'16.2.0'})
-CREATE (RelationalDataStrategy:DataCharacteristic{title:'Relational Data Strategy',description:'Data Strategy using a Relational Model',type:'Relational',tool: 'Postgres', pattern:['read-heavy / write-heavy'],scaling:['Horizontal'],distribution:['Replicated']})
-CREATE (GraphDBDataStrategy:DataCharacteristic{title:'GraphDB Data Strategy',description:'Data Strategy using a Graph Model',type:'Graph',tool: 'neo4j', pattern:['read-heavy / write-heavy'],scaling:['Horizontal'],distribution:['Replicated']})
+CREATE (RelationalDataStrategy:DataStrategy{title:'Relational Data Strategy',description:'Data Strategy using a Relational Model',type:'Relational',tool: 'Postgres', pattern:['read-heavy / write-heavy'],scaling:['Horizontal'],distribution:['Replicated']})
+CREATE (GraphDBDataStrategy:DataStrategy{title:'GraphDB Data Strategy',description:'Data Strategy using a Graph Model',type:'Graph',tool: 'neo4j', pattern:['read-heavy / write-heavy'],scaling:['Horizontal'],distribution:['Replicated']})
 
-CREATE (AWSECSDeploymentStrategy:DeploymentCharacteristic{cloud:['AWS'],runtime:['ECS'],title:'Deployment Strategy',description:'Deployment Strategy using AWS ECS',dataRuntime:'RDS'})
-CREATE (AWSEC2DeploymentStrategy:DeploymentCharacteristic{cloud:['AWS'],runtime:['EC2'],title:'Deployment Strategy',description:'Deployment Strategy using AWS EC2',dataRuntime:'RDS'})
+CREATE (AWSECSDeploymentStrategy:DeploymentStrategy{cloud:['AWS'],runtime:['ECS'],title:'Deployment Strategy',description:'Deployment Strategy using AWS ECS',dataRuntime:'RDS'})
+CREATE (AWSEC2DeploymentStrategy:DeploymentStrategy{cloud:['AWS'],runtime:['EC2'],title:'Deployment Strategy',description:'Deployment Strategy using AWS EC2',dataRuntime:'RDS'})
 
-CREATE (MonitoringStrategy:MonitoringCharacteristic{title:'Monitoring',description:'Monitoring characteristics for Microservices',logging:['ELK'],alerting:['Pagerduty'],metrics:['Prometheus'],dashboard:['Grafana']})
-CREATE (Documentation:DocumentationCharacteristic{title:'Documentation',description:'Documentation of the Microservice',available:['Yes'],tool:['Confluence'],architecture_diagram:['Yes'],dataflow_diagram:['Yes'], on_call_runbook:['Yes']})
+CREATE (Monitoring:MonitoringStrategy{title:'Monitoring',description:'Monitoring strategy for Microservices',logging:['ELK'],alerting:['Pagerduty'],metrics:['Prometheus'],dashboard:['Grafana']})
+CREATE (Documentation:DocumentationStrategy{title:'Documentation',description:'Documentation of the Microservice',available:['Yes'],tool:['Confluence'],architecture_diagram:['Yes'],dataflow_diagram:['Yes'], on_call_runbook:['Yes']})
 
 
 //All Relations
@@ -48,14 +48,14 @@ CREATE (FlightBookingMS)-[:WRITTEN_USING]->(Java14)
 CREATE (FlightBookingMS)-[:DEPLOYED_USING]->(AWSECSDeploymentStrategy)
 CREATE (FlightBookingMS)-[:MONITORED_USING]->(MonitoringStrategy)
 CREATE (FlightBookingMS)-[:DOCUMENTED_USING]->(Documentation)
-CREATE (FlightBookingMS)-[:DATA_STRATEGY]->(RelationalDataStrategy)
+CREATE (FlightBookingMS)-[:DATA]->(RelationalDataStrategy)
 
 CREATE (FlightPlanningMS)-[:OWNED_BY]->(Team2)
 CREATE (FlightPlanningMS)-[:WRITTEN_USING]->(Python390)
 CREATE (FlightPlanningMS)-[:DEPLOYED_USING]->(AWSEC2DeploymentStrategy)
 CREATE (FlightPlanningMS)-[:MONITORED_USING]->(MonitoringStrategy)
 CREATE (FlightPlanningMS)-[:DOCUMENTED_USING]->(Documentation)
-CREATE (FlightPlanningMS)-[:DATA_STRATEGY]->(GraphDBDataStrategy)
+CREATE (FlightPlanningMS)-[:DATA]->(GraphDBDataStrategy)
 
 
 CREATE (FlightMonitoringMS)-[:OWNED_BY]->(Team3)
@@ -63,16 +63,14 @@ CREATE (FlightMonitoringMS)-[:WRITTEN_USING]->(Python395)
 CREATE (FlightMonitoringMS)-[:DEPLOYED_USING]->(AWSECSDeploymentStrategy)
 CREATE (FlightMonitoringMS)-[:MONITORED_USING]->(MonitoringStrategy)
 CREATE (FlightMonitoringMS)-[:DOCUMENTED_USING]->(Documentation)
-CREATE (FlightMonitoringMS)-[:DATA_STRATEGY]->(RelationalDataStrategy)
-
-
+CREATE (FlightMonitoringMS)-[:DATA]->(RelationalDataStrategy)
 
 CREATE (InventoryAssignmentMS)-[:OWNED_BY]->(Team4)
 CREATE (InventoryAssignmentMS)-[:WRITTEN_USING]->(Go1164)
 CREATE (InventoryAssignmentMS)-[:DEPLOYED_USING]->(AWSECSDeploymentStrategy)
 CREATE (InventoryAssignmentMS)-[:MONITORED_USING]->(MonitoringStrategy)
 CREATE (InventoryAssignmentMS)-[:DOCUMENTED_USING]->(Documentation)
-CREATE (InventoryAssignmentMS)-[:DATA_STRATEGY]->(RelationalDataStrategy)
+CREATE (InventoryAssignmentMS)-[:DATA]->(RelationalDataStrategy)
 
 
 
@@ -81,14 +79,11 @@ CREATE (FlightPreparationMS)-[:WRITTEN_USING]->(NodeJS1620)
 CREATE (FlightPreparationMS)-[:DEPLOYED_USING]->(AWSEC2DeploymentStrategy)
 CREATE (FlightPreparationMS)-[:MONITORED_USING]->(MonitoringStrategy)
 CREATE (FlightPreparationMS)-[:DOCUMENTED_USING]->(Documentation)
-CREATE (FlightPreparationMS)-[:DATA_STRATEGY]->(GraphDBDataStrategy)
+CREATE (FlightPreparationMS)-[:DATA]->(GraphDBDataStrategy)
 
 CREATE (GateManagementMS)-[:OWNED_BY]->(Team6)
 CREATE (GateManagementMS)-[:WRITTEN_USING]->(Python395)
 CREATE (GateManagementMS)-[:DEPLOYED_USING]->(AWSECSDeploymentStrategy)
 CREATE (GateManagementMS)-[:MONITORED_USING]->(MonitoringStrategy)
 CREATE (GateManagementMS)-[:DOCUMENTED_USING]->(Documentation)
-CREATE (GateManagementMS)-[:DATA_STRATEGY]->(GraphDBDataStrategy)
-
-
-
+CREATE (GateManagementMS)-[:DATA]->(GraphDBDataStrategy)
