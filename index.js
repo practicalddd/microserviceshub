@@ -3,11 +3,12 @@ const neo4j = require("neo4j-driver");
 const { makeAugmentedSchema } = require("neo4j-graphql-js");
 
 const AURA_ENDPOINT = 'neo4j+s://3710420b.databases.neo4j.io'
-const USERNAME = '<<Username>>';
+const USERNAME = 'neo4j';
 const PASSWORD = '<<Password>>';
 
 const typeDefs = /* GraphQL */ `
    type Industry {
+	id: ID!
 	title: String!
 	description: String!
         domains: [Domain] @relation(name: "BROKEN_DOWN_INTO", direction: OUT)
@@ -28,10 +29,10 @@ const typeDefs = /* GraphQL */ `
 	title: String!
 	description: String!
 	mschassis: [MSChassis] @relation(name: "WRITTEN_USING", direction: OUT)
-	deployment: [DeploymentCharacteristic] @relation(name: "DEPLOYED_USING", direction: OUT)
-	monitoring: [MonitoringCharacteristic] @relation(name: "MONITORED_USING", direction: OUT)
-	datastrategy: [DataCharacteristic] @relation(name: "DATA_STRATEGY", direction: OUT)
-	documentation: [DocumentationCharacteristic] @relation(name: "DOCUMENTED_USING", direction: OUT) 
+	deployment: [DeploymentStrategy] @relation(name: "DEPLOYED_USING", direction: OUT)
+	monitoring: [MonitoringStrategy] @relation(name: "MONITORED_USING", direction: OUT)
+	datastrategy: [DataStrategy] @relation(name: "DATA", direction: OUT)
+	documentation: [DocumentationStrategy] @relation(name: "DOCUMENTED_USING", direction: OUT) 
 	}
 
    type MSChassis {
@@ -40,14 +41,14 @@ const typeDefs = /* GraphQL */ `
 	ver: String!
 	}
 
-   type DeploymentCharacteristic{
+   type DeploymentStrategy{
 	title: String!
 	description: String!
 	runtime: String!
 	cloud: String!
 	}
 
-   type DataCharacteristic{
+   type DataStrategy{
 	title: String!
 	description: String!
 	type: String!
@@ -57,7 +58,7 @@ const typeDefs = /* GraphQL */ `
 	distribution: String!	
 	}
 
-     type MonitoringCharacteristic{
+     type MonitoringStrategy{
 	title: String!
 	description: String!
 	logging: String!
@@ -66,7 +67,7 @@ const typeDefs = /* GraphQL */ `
 	dashboard: String!
 	}
 
-      type DocumentationCharacteristic{
+      type DocumentationStrategy{
 	title: String!
 	description: String!
 	available: String!
